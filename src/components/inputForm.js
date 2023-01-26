@@ -1,14 +1,13 @@
-import React, { Component } from "react";
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+import LocalForm from "./common/form";
 import Input from "./common/input";
 import InputCheckbox from "./common/inputCheckbox";
 
-class InputForm extends Component {
+class InputForm extends LocalForm {
   state = {
-    account: {
+    data: {
       surname: "",
       name: "",
       year: "",
@@ -18,28 +17,24 @@ class InputForm extends Component {
     errors: {},
   };
 
-  validate = () => {
+  schema = () => {
     const Joi = require("joi");
-    const schema = Joi.object({});
-    return { surname: "Surname is requred." };
+    const schema = Joi.object({
+      surname: Joi.string().required(),
+      name: Joi.string().required(),
+      year: Joi.number().integer().min(1900).max(2013).required(),
+      gender: Joi.valid("M").valid("F").required(),
+      province: Joi.valid("L").valid("P").required(),
+    });
+    return schema;
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    const errors = this.validate();
-    this.setState({ errors: errors || {} });
-    if (errors) return;
-  };
-
-  handleChange = ({ currentTarget: input }) => {
-    const account = { ...this.state.account };
-    account[input.name] = input.value;
-    this.setState({ account });
+  doSubmit = () => {
+    console.log("Submitted");
   };
 
   render() {
-    const { account } = this.state;
+    const { data } = this.state;
     const { errors } = this.state;
     return (
       <div>
@@ -48,21 +43,21 @@ class InputForm extends Component {
             name="surname"
             label="Cognome"
             error={errors.surname}
-            value={account.surname}
+            value={data.surname}
             onChange={this.handleChange}
           ></Input>
           <Input
             name="name"
             label="Nome"
             error={errors.name}
-            value={account.name}
+            value={data.name}
             onChange={this.handleChange}
           ></Input>
           <Input
             name="year"
             label="Anno di nascita"
             error={errors.year}
-            value={account.year}
+            value={data.year}
             onChange={this.handleChange}
           ></Input>
           <InputCheckbox
@@ -71,7 +66,7 @@ class InputForm extends Component {
             values={["M", "F"]}
             legend="M-per maschio, F-per femmina"
             error={errors.gender}
-            value={account.gender}
+            value={data.gender}
             onChange={this.handleChange}
           ></InputCheckbox>
           <InputCheckbox
@@ -80,7 +75,7 @@ class InputForm extends Component {
             values={["L", "P"]}
             legend="L-per lugagnao, P-per provincia"
             error={errors.province}
-            value={account.province}
+            value={data.province}
             onChange={this.handleChange}
           ></InputCheckbox>
           <Button variant="primary" type="submit">
