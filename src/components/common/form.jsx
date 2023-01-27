@@ -5,8 +5,8 @@ class LocalForm extends Component {
 
   validate = () => {
     const schema = this.schema();
-    const options = { abortEarly: false };
-    const result = schema.validate(this.state.data, options);
+    //const options = { abortEarly: false };
+    const result = schema.validate(this.state.data);
 
     if (!result.error) return null;
 

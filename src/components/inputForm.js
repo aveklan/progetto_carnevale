@@ -1,5 +1,8 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Row";
 
 import LocalForm from "./common/form";
 import Input from "./common/input";
@@ -8,7 +11,6 @@ import InputCheckbox from "./common/inputCheckbox";
 class InputForm extends LocalForm {
   state = {
     data: {
-      id: "",
       surname: "",
       name: "",
       year: "",
@@ -21,7 +23,6 @@ class InputForm extends LocalForm {
   schema = () => {
     const Joi = require("joi");
     const schema = Joi.object({
-      id: Joi.string().allow(null, ""),
       surname: Joi.string().required(),
       name: Joi.string().required(),
       year: Joi.number().integer().min(1900).max(2013).required(),
@@ -34,6 +35,14 @@ class InputForm extends LocalForm {
   doSubmit = () => {
     this.props.onInsert(this.state.data);
     console.log("Submitted");
+    const data = {
+      surname: "",
+      name: "",
+      year: "",
+      gender: "",
+      province: "",
+    };
+    this.setState({ data });
   };
 
   render() {
@@ -81,9 +90,25 @@ class InputForm extends LocalForm {
             value={data.province}
             onChange={this.handleChange}
           ></InputCheckbox>
-          <Button variant="primary" type="submit">
-            Inserisci
-          </Button>
+          <Container>
+            <Row>
+              <Col md="auto">
+                <Button variant="primary" type="submit">
+                  Inserisci
+                </Button>
+              </Col>
+              <Col md="auto">
+                <Button variant="danger" onClick={this.props.onReset}>
+                  Reset
+                </Button>
+              </Col>
+              <Col md="auto">
+                <Button variant="success" onClick={this.props.onSave}>
+                  Salva
+                </Button>
+              </Col>
+            </Row>
+          </Container>
         </Form>
       </div>
     );

@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <div className="text-center">
-        <h1>Progetto Carnevale</h1>
+        <h1>Votazioni carnevale</h1>
       </div>
       <ParticipantManager></ParticipantManager>
     </div>
