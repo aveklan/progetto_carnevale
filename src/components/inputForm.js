@@ -8,6 +8,7 @@ import InputCheckbox from "./common/inputCheckbox";
 class InputForm extends LocalForm {
   state = {
     data: {
+      id: "",
       surname: "",
       name: "",
       year: "",
@@ -20,6 +21,7 @@ class InputForm extends LocalForm {
   schema = () => {
     const Joi = require("joi");
     const schema = Joi.object({
+      id: Joi.string().allow(null, ""),
       surname: Joi.string().required(),
       name: Joi.string().required(),
       year: Joi.number().integer().min(1900).max(2013).required(),
@@ -30,6 +32,7 @@ class InputForm extends LocalForm {
   };
 
   doSubmit = () => {
+    this.props.onInsert(this.state.data);
     console.log("Submitted");
   };
 
