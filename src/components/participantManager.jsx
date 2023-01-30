@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 
 import InputForm from "./inputForm";
 import ParticipantList from "./participantList";
-import Totals from "./common/totals";
+import Totals from "./totals";
 import {
   loadParticipants,
   getParticipants,
@@ -57,7 +57,7 @@ class ParticipantManager extends Component {
               onInsert={this.handleInsert}
               onCLear={this.handleClear}
               onSave={this.handleSave}
-            ></InputForm>
+            />
           </Col>
           <Col>
             <h4>Iscritti:</h4>
@@ -65,6 +65,11 @@ class ParticipantManager extends Component {
               participants={this.state.participants}
               onRemove={this.handleRemove}
             ></ParticipantList>
+          </Col>
+        </Row>
+        <Row className="mt-3">
+          <Col md={6}>
+            <h4>Totali:</h4>
             <Totals participants={this.state.participants}></Totals>
           </Col>
         </Row>
