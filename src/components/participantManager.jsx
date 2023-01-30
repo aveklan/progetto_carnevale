@@ -31,6 +31,10 @@ class ParticipantManager extends Component {
     resetParticipants();
     this.setState({ participants: [] });
   };
+  handleClear = () => {
+    resetParticipants();
+    this.setState({ participants: [] });
+  };
 
   handleSave = () => {
     saveParticipants();
@@ -51,7 +55,7 @@ class ParticipantManager extends Component {
             <h4>Conteggio votanti elezioni dello tzigano</h4>
             <InputForm
               onInsert={this.handleInsert}
-              onReset={this.handleReset}
+              onCLear={this.handleClear}
               onSave={this.handleSave}
             ></InputForm>
           </Col>

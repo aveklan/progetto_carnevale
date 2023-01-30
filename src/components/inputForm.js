@@ -7,25 +7,27 @@ import Container from "react-bootstrap/Row";
 import LocalForm from "./common/form";
 import Input from "./common/input";
 import InputCheckbox from "./common/inputCheckbox";
+import InputMask from "./common/inputMask";
 
+const initialState = {
+  data: {
+    surname: "",
+    name: "",
+    year: "",
+    gender: "",
+    province: "",
+  },
+  errors: {},
+};
 class InputForm extends LocalForm {
-  state = {
-    data: {
-      surname: "",
-      name: "",
-      year: "",
-      gender: "",
-      province: "",
-    },
-    errors: {},
-  };
-
+  state = { ...initialState };
   schema = () => {
     const Joi = require("joi");
     const schema = Joi.object({
       surname: Joi.string().required(),
       name: Joi.string().required(),
-      year: Joi.number().integer().min(1900).max(2013).required(),
+      //year: Joi.number().integer().min(1900).max(2013).required(),
+      year: Joi.string().required(),
       gender: Joi.valid("M").valid("F").required(),
       province: Joi.valid("L").valid("P").required(),
     });
@@ -34,15 +36,11 @@ class InputForm extends LocalForm {
 
   doSubmit = () => {
     this.props.onInsert(this.state.data);
-    console.log("Submitted");
-    const data = {
-      surname: "",
-      name: "",
-      year: "",
-      gender: "",
-      province: "",
-    };
-    this.setState({ data });
+    this.setState({ ...initialState });
+  };
+
+  onClear = () => {
+    this.setState({ ...initialState });
   };
 
   render() {
@@ -65,13 +63,13 @@ class InputForm extends LocalForm {
             value={data.name}
             onChange={this.handleChange}
           ></Input>
-          <Input
+          <InputMask
             name="year"
             label="Anno di nascita"
             error={errors.year}
             value={data.year}
             onChange={this.handleChange}
-          ></Input>
+          ></InputMask>
           <InputCheckbox
             name="gender"
             label="Sesso"
@@ -98,8 +96,8 @@ class InputForm extends LocalForm {
                 </Button>
               </Col>
               <Col md="auto">
-                <Button variant="danger" onClick={this.props.onReset}>
-                  Reset
+                <Button variant="danger" onClick={this.onClear}>
+                  Clear
                 </Button>
               </Col>
               <Col md="auto">
