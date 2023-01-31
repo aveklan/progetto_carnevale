@@ -52,12 +52,16 @@ class ParticipantManager extends Component {
       <Container fluid>
         <Row>
           <Col>
-            <h4>Conteggio votanti elezioni dello tzigano</h4>
-            <InputForm
-              onInsert={this.handleInsert}
-              onCLear={this.handleClear}
-              onSave={this.handleSave}
-            />
+            <Row>
+              <h4>Conteggio votanti elezioni dello tzigano</h4>
+              <InputForm
+                onInsert={this.handleInsert}
+                onCLear={this.handleClear}
+                onSave={this.handleSave}
+              />
+              <h4 className="mt-3">Totali:</h4>
+              <Totals participants={this.state.participants}></Totals>
+            </Row>
           </Col>
           <Col>
             <h4>Iscritti:</h4>
@@ -65,12 +69,6 @@ class ParticipantManager extends Component {
               participants={this.state.participants}
               onRemove={this.handleRemove}
             ></ParticipantList>
-          </Col>
-        </Row>
-        <Row className="mt-3">
-          <Col md={6}>
-            <h4>Totali:</h4>
-            <Totals participants={this.state.participants}></Totals>
           </Col>
         </Row>
       </Container>
